@@ -64,17 +64,17 @@ namespace GreateBelt.Pn.Services.GreateBeltReportService
                 var core = await _core.GetCore();
                 var sdkDbContext = core.DbContextHelper.GetDbContext();
 
-                var fieldIds = new List<int>();
-
-                foreach (var eform in model.EformIds)
-                {
-                    var fieldId = sdkDbContext.Fields
-                                    .Where(x => eform + 1 == x.CheckListId)
-                                    .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
-                                    .Select(x => x.Id)
-                                    .FirstOrDefault();
-                    fieldIds.Add(fieldId);
-                }
+                // var fieldIds = new List<int>();
+                //
+                // foreach (var eform in model.EformIds)
+                // {
+                //     var fieldId = sdkDbContext.Fields
+                //                     .Where(x => eform + 1 == x.CheckListId)
+                //                     .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+                //                     .Select(x => x.Id)
+                //                     .FirstOrDefault();
+                //     fieldIds.Add(fieldId);
+                // }
 
                 //var currentLanguage = await _userService.GetCurrentUserLanguage();
                 var nameFields = new List<string> { "Id", "Value", "DoneAtUserModifiable", "DoneAt" };
@@ -112,18 +112,20 @@ namespace GreateBelt.Pn.Services.GreateBeltReportService
 
                 //var allFieldValues = core.Advanced_FieldValueReadList(foundCaseIds, currentLanguage);
 
-                var foundPlanningCasesSiteInfo = await _itemsPlanningPnDbContext.PlanningCaseSites
-                    //.Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
-                    .Where(x => model.EformIds.Contains(x.MicrotingSdkeFormId) && foundCaseIds.Contains(x.MicrotingSdkCaseId))
-                    .Select(x => new
-                    {
-                        x.PlanningId,
-                        x.MicrotingSdkCaseId,
-                    })
-                    .ToListAsync();
+                // var foundPlanningCasesSiteInfo = await _itemsPlanningPnDbContext.PlanningCaseSites
+                //     //.Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+                //     .Where(x => model.EformIds.Contains(x.MicrotingSdkeFormId))
+                //     .Where(x => foundCaseIds.Contains(x.MicrotingSdkCaseId) || foundCaseIds.Contains(x.MicrotingCheckListSitId))
+                //     .Select(x => new
+                //     {
+                //         x.PlanningId,
+                //         x.MicrotingSdkCaseId,
+                //         x.MicrotingCheckListSitId
+                //     })
+                //     .ToListAsync();
 
                 var plannings = await _itemsPlanningPnDbContext.Plannings
-                    .Where(x => foundPlanningCasesSiteInfo.Select(y => y.PlanningId).Contains(x.Id))
+                    .Where(x => model.EformIds.Contains(x.RelatedEFormId))
                     .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
                     .Select(x => new
                     {
@@ -135,8 +137,15 @@ namespace GreateBelt.Pn.Services.GreateBeltReportService
                     })
                     .ToListAsync();
 
+                var planningCasesQuery = _itemsPlanningPnDbContext.PlanningCases
+                    .Include(x => x.Planning)
+                    .Where(x => foundCaseIds.Contains(x.MicrotingSdkCaseId))
+                    .Where(x => x.Status == 100)
+                    .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+                    .AsQueryable();
+
                 var joined = plannings
-                    .Join(foundPlanningCasesSiteInfo, arg => arg.Id, arg => arg.PlanningId,
+                    .Join(planningCasesQuery, arg => arg.Id, arg => arg.PlanningId,
                         (x, y) => new
                         {
                             x.Name,

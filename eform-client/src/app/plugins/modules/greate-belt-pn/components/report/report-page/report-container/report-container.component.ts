@@ -52,8 +52,36 @@ export class ReportContainerComponent implements OnInit, OnDestroy {
       this.selectedEformIds = [11];
     }
 
+    if (this.router.url.indexOf('/oresund/tr') > -1) {
+      this.selectedEformIds = [449];
+    }
+
+    if (this.router.url.indexOf('/oresund/oesaekcsltf') > -1) {
+      this.selectedEformIds = [451];
+    }
+
+    if (this.router.url.indexOf('/oresund/oesse') > -1) {
+      this.selectedEformIds = [449];
+    }
+
+    if (this.router.url.indexOf('/storebaelt/2-mdr') > -1) {
+      this.selectedEformIds = [23];
+    }
+
+    if (this.router.url.indexOf('/storebaelt/tr') > -1) {
+      this.selectedEformIds = [36];
+    }
+
     if (this.router.url.indexOf('/storebaelt/14-dags') > -1) {
       this.selectedEformIds = [11];
+    }
+
+    if (this.router.url.indexOf('/storebaelt/saekcsltf') > -1) {
+      this.selectedEformIds = [38];
+    }
+
+    if (this.router.url.indexOf('/storebaelt/sse') > -1) {
+      this.selectedEformIds = [40, 147, 191, 305, 412];
     }
 
     this.getReport();

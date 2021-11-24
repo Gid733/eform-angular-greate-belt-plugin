@@ -13,7 +13,35 @@ export const routes: Routes = [
         component: ReportContainerComponent,
       },
       {
+        path: 'report/storebaelt/2-mdr',
+        component: ReportContainerComponent,
+      },
+      {
+        path: 'report/storebaelt/tr',
+        component: ReportContainerComponent,
+      },
+      {
+        path: 'report/storebaelt/saekcsltf',
+        component: ReportContainerComponent,
+      },
+      {
+        path: 'report/storebaelt/sse',
+        component: ReportContainerComponent,
+      },
+      {
         path: 'report/oresund/14-dags',
+        component: ReportContainerComponent,
+      },
+      {
+        path: 'report/oresund/tr',
+        component: ReportContainerComponent,
+      },
+      {
+        path: 'report/oresund/oesaekcsltf',
+        component: ReportContainerComponent,
+      },
+      {
+        path: 'report/oresund/oesse',
         component: ReportContainerComponent,
       },
     ],

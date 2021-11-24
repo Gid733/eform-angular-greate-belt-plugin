@@ -52,6 +52,7 @@ namespace GreateBelt.Pn
         public string PluginId => "eform-angular-greate-belt-plugin";
         public string PluginPath => PluginAssembly().Location;
         public string PluginBaseUrl => "greate-belt-pn";
+
         private string _connectionString;
         //private IBus _bus;
 
@@ -70,12 +71,10 @@ namespace GreateBelt.Pn
 
         public void AddPluginConfig(IConfigurationBuilder builder, string connectionString)
         {
-
         }
 
         public void ConfigureOptionsServices(IServiceCollection services, IConfiguration configuration)
         {
-
         }
 
         public void ConfigureDbContext(IServiceCollection services, string connectionString)
@@ -86,10 +85,10 @@ namespace GreateBelt.Pn
             services.AddDbContext<ItemsPlanningPnDbContext>(o =>
                 o.UseMySql(itemsPlannigConnectionString, new MariaDbServerVersion(
                     new Version(10, 4, 0)), mySqlOptionsAction: builder =>
-                    {
-                        builder.EnableRetryOnFailure();
-                        builder.MigrationsAssembly(PluginAssembly().FullName);
-                    }));
+                {
+                    builder.EnableRetryOnFailure();
+                    builder.MigrationsAssembly(PluginAssembly().FullName);
+                }));
         }
 
         public void Configure(IApplicationBuilder appBuilder)
@@ -114,147 +113,477 @@ namespace GreateBelt.Pn
         {
             var pluginMenu = new List<PluginMenuItemModel>
             {
-                    new()
+                new()
+                {
+                    Name = "Dropdown",
+                    E2EId = "greate-belt-pn-oresund",
+                    Link = "",
+                    Type = MenuItemTypeEnum.Dropdown,
+                    Position = 1,
+                    Translations = new List<PluginMenuTranslationModel>
                     {
-                        Name = "Dropdown",
-                        E2EId = "greate-belt-pn-oresund",
-                        Link = "",
-                        Type = MenuItemTypeEnum.Dropdown,
-                        Position = 0,
-                        Translations = new List<PluginMenuTranslationModel>
+                        new()
                         {
-                            new()
-                            {
-                                 LocaleName = LocaleNames.English,
-                                 Name = "Øresund",
-                                 Language = LanguageNames.English,
-                            },
-                            new()
-                            {
-                                 LocaleName = LocaleNames.Danish,
-                                 Name = "Øresund",
-                                 Language = LanguageNames.Danish,
-                            },
+                            LocaleName = LocaleNames.English,
+                            Name = "Øresund",
+                            Language = LanguageNames.English,
                         },
-                        ChildItems = new List<PluginMenuItemModel>
+                        new()
                         {
-                            new()
+                            LocaleName = LocaleNames.Danish,
+                            Name = "Øresund",
+                            Language = LanguageNames.Danish,
+                        },
+                    },
+                    ChildItems = new List<PluginMenuItemModel>
+                    {
+                        new()
+                        {
+                            Name = "Øresund: Sporanlæg (Eftersyn og smøring af skinneudtraek - 14 dags) menu",
+                            E2EId = "greate-belt-pn-report-oresund",
+                            Link = "/plugins/greate-belt-pn/report/oresund/14-dags",
+                            Type = MenuItemTypeEnum.Link,
+                            Position = 3,
+                            MenuTemplate = new PluginMenuTemplateModel
                             {
                                 Name = "Øresund: Sporanlæg (Eftersyn og smøring af skinneudtraek - 14 dags) menu",
-                                E2EId = "greate-belt-pn-report-oresund",
-                                Link = "/plugins/greate-belt-pn/report/oresund/14-dags",
-                                Type = MenuItemTypeEnum.Link,
-                                Position = 0,
-                                MenuTemplate = new PluginMenuTemplateModel
-                                {
-                                    Name = "Øresund: Sporanlæg (Eftersyn og smøring af skinneudtraek - 14 dags) menu",
-                                    E2EId = "greate-belt-pn-oresund-14-dags",
-                                    DefaultLink = "/plugins/greate-belt-pn/report/oresund/14-dags",
-                                    Translations = new List<PluginMenuTranslationModel>
-                                    {
-                                        new()
-                                        {
-                                            LocaleName = LocaleNames.English,
-                                            Name = "Øresund: Track system (Inspection and lubrication of rail extraction - 14 days) menu",
-                                            Language = LanguageNames.English,
-                                        },
-                                        new()
-                                        {
-                                            LocaleName = LocaleNames.Danish,
-                                            Name = "Øresund: Sporanlæg (Eftersyn og smøring af skinneudtraek - 14 dags) menu",
-                                            Language = LanguageNames.Danish,
-                                        },
-                                    }
-                                },
+                                E2EId = "greate-belt-pn-oresund-14-dags",
+                                DefaultLink = "/plugins/greate-belt-pn/report/oresund/14-dags",
                                 Translations = new List<PluginMenuTranslationModel>
                                 {
-                                        new()
-                                        {
-                                            LocaleName = LocaleNames.English,
-                                            Name = "Øresund: Track system (Inspection and lubrication of rail extraction - 14 days) menu",
-                                            Language = LanguageNames.English,
-                                        },
-                                        new()
-                                        {
-                                            LocaleName = LocaleNames.Danish,
-                                            Name = "Øresund: Sporanlæg (Eftersyn og smøring af skinneudtraek - 14 dags) menu",
-                                            Language = LanguageNames.Danish,
-                                        },
+                                    new()
+                                    {
+                                        LocaleName = LocaleNames.English,
+                                        Name =
+                                            "Øresund: Track system (Inspection and lubrication of rail extraction - 14 days) menu",
+                                        Language = LanguageNames.English,
+                                    },
+                                    new()
+                                    {
+                                        LocaleName = LocaleNames.Danish,
+                                        Name =
+                                            "Øresund: Sporanlæg (Eftersyn og smøring af skinneudtraek - 14 dags) menu",
+                                        Language = LanguageNames.Danish,
+                                    },
                                 }
                             },
-                        }
-                    },
-                    new()
-                    {
-                        Name = "Dropdown",
-                        E2EId = "greate-belt-pn-storebaelt",
-                        Link = "",
-                        Type = MenuItemTypeEnum.Dropdown,
-                        Position = 1,
-                        Translations = new List<PluginMenuTranslationModel>
-                        {
-                            new()
+                            Translations = new List<PluginMenuTranslationModel>
                             {
-                                 LocaleName = LocaleNames.English,
-                                 Name = "Greate Belt",
-                                 Language = LanguageNames.English,
-                            },
-                            new()
-                            {
-                                 LocaleName = LocaleNames.Danish,
-                                 Name = "Greate Belt",
-                                 Language = LanguageNames.Danish,
-                            },
+                                new()
+                                {
+                                    LocaleName = LocaleNames.English,
+                                    Name =
+                                        "Øresund: Track system (Inspection and lubrication of rail extraction - 14 days) menu",
+                                    Language = LanguageNames.English,
+                                },
+                                new()
+                                {
+                                    LocaleName = LocaleNames.Danish,
+                                    Name = "Øresund: Sporanlæg (Eftersyn og smøring af skinneudtraek - 14 dags) menu",
+                                    Language = LanguageNames.Danish,
+                                },
+                            }
                         },
-                        ChildItems = new List<PluginMenuItemModel>
+                        new()
                         {
-                            new()
+                            Name = "Øresund: Tilstandsrapport menu",
+                            E2EId = "greate-belt-pn-report-oresund",
+                            Link = "/plugins/greate-belt-pn/report/oresund/oesse",
+                            Type = MenuItemTypeEnum.Link,
+                            Position = 0,
+                            MenuTemplate = new PluginMenuTemplateModel
+                            {
+                                Name = "Øresund: Tilstandsrapport menu",
+                                E2EId = "greate-belt-pn-oresund-14-dags",
+                                DefaultLink = "/plugins/greate-belt-pn/report/oresund/oesse",
+                                Translations = new List<PluginMenuTranslationModel>
+                                {
+                                    new()
+                                    {
+                                        LocaleName = LocaleNames.English,
+                                        Name =
+                                            "Øresund: Track system (Inspection and lubrication of rail extraction - 14 days) menu",
+                                        Language = LanguageNames.English,
+                                    },
+                                    new()
+                                    {
+                                        LocaleName = LocaleNames.Danish,
+                                        Name =
+                                            "Øresund: Tilstandsrapport",
+                                        Language = LanguageNames.Danish,
+                                    },
+                                }
+                            },
+                            Translations = new List<PluginMenuTranslationModel>
+                            {
+                                new()
+                                {
+                                    LocaleName = LocaleNames.English,
+                                    Name =
+                                        "Øresund: Track system (Inspection and lubrication of rail extraction - 14 days) menu",
+                                    Language = LanguageNames.English,
+                                },
+                                new()
+                                {
+                                    LocaleName = LocaleNames.Danish,
+                                    Name = "Øresund: Tilstandsrapport",
+                                    Language = LanguageNames.Danish,
+                                },
+                            }
+                        },
+                        new()
+                        {
+                            Name = "Øresund: Sporskifteeftersyn menu",
+                            E2EId = "greate-belt-pn-report-oresund",
+                            Link = "/plugins/greate-belt-pn/report/oresund/tr",
+                            Type = MenuItemTypeEnum.Link,
+                            Position = 1,
+                            MenuTemplate = new PluginMenuTemplateModel
+                            {
+                                Name = "Øresund: Sporskifteeftersyn menu",
+                                E2EId = "greate-belt-pn-oresund-14-dags",
+                                DefaultLink = "/plugins/greate-belt-pn/report/oresund/tr",
+                                Translations = new List<PluginMenuTranslationModel>
+                                {
+                                    new()
+                                    {
+                                        LocaleName = LocaleNames.English,
+                                        Name =
+                                            "Øresund: Track system (Inspection and lubrication of rail extraction - 14 days) menu",
+                                        Language = LanguageNames.English,
+                                    },
+                                    new()
+                                    {
+                                        LocaleName = LocaleNames.Danish,
+                                        Name =
+                                            "Øresund: Sporskifteeftersyn",
+                                        Language = LanguageNames.Danish,
+                                    },
+                                }
+                            },
+                            Translations = new List<PluginMenuTranslationModel>
+                            {
+                                new()
+                                {
+                                    LocaleName = LocaleNames.English,
+                                    Name =
+                                        "Øresund: Track system (Inspection and lubrication of rail extraction - 14 days) menu",
+                                    Language = LanguageNames.English,
+                                },
+                                new()
+                                {
+                                    LocaleName = LocaleNames.Danish,
+                                    Name = "Øresund: Sporskifteeftersyn",
+                                    Language = LanguageNames.Danish,
+                                },
+                            }
+                        },
+                        new()
+                        {
+                            Name = "Øresund: Sporanlæg (Eftersyn og kontrol af gennemgående og centralsikrede spor) menu",
+                            E2EId = "greate-belt-pn-report-oresund",
+                            Link = "/plugins/greate-belt-pn/report/oresund/oesaekcsltf",
+                            Type = MenuItemTypeEnum.Link,
+                            Position = 2,
+                            MenuTemplate = new PluginMenuTemplateModel
+                            {
+                                Name = "Øresund: Sporanlæg (Eftersyn og kontrol af gennemgående og centralsikrede spor) menu",
+                                E2EId = "greate-belt-pn-oresund-14-dags",
+                                DefaultLink = "/plugins/greate-belt-pn/report/oresund/oesaekcsltf",
+                                Translations = new List<PluginMenuTranslationModel>
+                                {
+                                    new()
+                                    {
+                                        LocaleName = LocaleNames.English,
+                                        Name =
+                                            "Øresund: Track system (Inspection and lubrication of rail extraction - 14 days) menu",
+                                        Language = LanguageNames.English,
+                                    },
+                                    new()
+                                    {
+                                        LocaleName = LocaleNames.Danish,
+                                        Name =
+                                            "Øresund: Sporanlæg (Eftersyn og kontrol af gennemgående og centralsikrede spor)",
+                                        Language = LanguageNames.Danish,
+                                    },
+                                }
+                            },
+                            Translations = new List<PluginMenuTranslationModel>
+                            {
+                                new()
+                                {
+                                    LocaleName = LocaleNames.English,
+                                    Name =
+                                        "Øresund: Track system (Inspection and lubrication of rail extraction - 14 days) menu",
+                                    Language = LanguageNames.English,
+                                },
+                                new()
+                                {
+                                    LocaleName = LocaleNames.Danish,
+                                    Name = "Øresund: Sporanlæg (Eftersyn og kontrol af gennemgående og centralsikrede spor)",
+                                    Language = LanguageNames.Danish,
+                                },
+                            }
+                        },
+                    }
+                },
+                new()
+                {
+                    Name = "Dropdown",
+                    E2EId = "greate-belt-pn-storebaelt",
+                    Link = "",
+                    Type = MenuItemTypeEnum.Dropdown,
+                    Position = 0,
+                    Translations = new List<PluginMenuTranslationModel>
+                    {
+                        new()
+                        {
+                            LocaleName = LocaleNames.English,
+                            Name = "Greate Belt",
+                            Language = LanguageNames.English,
+                        },
+                        new()
+                        {
+                            LocaleName = LocaleNames.Danish,
+                            Name = "Storebælt",
+                            Language = LanguageNames.Danish,
+                        },
+                    },
+                    ChildItems = new List<PluginMenuItemModel>
+                    {
+                        new()
+                        {
+                            Name = "Greate Belt: Sporanlæg (Eftersyn og smøring af skinneudtraek - 14 dags) menu",
+                            E2EId = "greate-belt-pn-report-storebaelt",
+                            Link = "/plugins/greate-belt-pn/report/storebaelt/14-dags",
+                            Type = MenuItemTypeEnum.Link,
+                            Position = 3,
+                            MenuTemplate = new PluginMenuTemplateModel
                             {
                                 Name = "Greate Belt: Sporanlæg (Eftersyn og smøring af skinneudtraek - 14 dags) menu",
-                                E2EId = "greate-belt-pn-report-storebaelt",
-                                Link = "/plugins/greate-belt-pn/report/storebaelt/14-dags",
-                                Type = MenuItemTypeEnum.Link,
-                                Position = 0,
-                                MenuTemplate = new PluginMenuTemplateModel
-                                {
-                                    Name = "Greate Belt: Sporanlæg (Eftersyn og smøring af skinneudtraek - 14 dags) menu",
-                                    E2EId = "greate-belt-pn-storebaelt-14-dags",
-                                    DefaultLink = "/plugins/greate-belt-pn/report/storebaelt/14-dags",
-                                    Translations = new List<PluginMenuTranslationModel>
-                                    {
-                                        new()
-                                        {
-                                            LocaleName = LocaleNames.English,
-                                            Name = "Greate Belt: Track system (Inspection and lubrication of rail extraction - 14 days) menu",
-                                            Language = LanguageNames.English,
-                                        },
-                                        new()
-                                        {
-                                            LocaleName = LocaleNames.Danish,
-                                            Name = "Greate Belt: Sporanlæg (Eftersyn og smøring af skinneudtraek - 14 dags) menu",
-                                            Language = LanguageNames.Danish,
-                                        },
-                                    }
-                                },
+                                E2EId = "greate-belt-pn-storebaelt-14-dags",
+                                DefaultLink = "/plugins/greate-belt-pn/report/storebaelt/14-dags",
                                 Translations = new List<PluginMenuTranslationModel>
                                 {
-                                        new()
-                                        {
-                                            LocaleName = LocaleNames.English,
-                                            Name = "Greate Belt: Track system (Inspection and lubrication of rail extraction - 14 days) menu",
-                                            Language = LanguageNames.English,
-                                        },
-                                        new()
-                                        {
-                                            LocaleName = LocaleNames.Danish,
-                                            Name = "Greate Belt: Sporanlæg (Eftersyn og smøring af skinneudtraek - 14 dags) menu",
-                                            Language = LanguageNames.Danish,
-                                        },
+                                    new()
+                                    {
+                                        LocaleName = LocaleNames.English,
+                                        Name =
+                                            "Greate Belt: Track system (Inspection and lubrication of rail extraction - 14 days) menu",
+                                        Language = LanguageNames.English,
+                                    },
+                                    new()
+                                    {
+                                        LocaleName = LocaleNames.Danish,
+                                        Name = "Storebælt: Skinneudtræk (14 dags)",
+                                        Language = LanguageNames.Danish,
+                                    },
                                 }
                             },
-                        }
+                            Translations = new List<PluginMenuTranslationModel>
+                            {
+                                new()
+                                {
+                                    LocaleName = LocaleNames.English,
+                                    Name =
+                                        "Greate Belt: Track system (Inspection and lubrication of rail extraction - 14 days) menu",
+                                    Language = LanguageNames.English,
+                                },
+                                new()
+                                {
+                                    LocaleName = LocaleNames.Danish,
+                                    Name = "Storebælt: Skinneudtræk (14 dags)",
+                                    Language = LanguageNames.Danish,
+                                },
+                            }
+                        },
+                        new()
+                        {
+                            Name = "Greate Belt: Sporanlæg (Eftersyn og smøring af skinneudtraek - 2 måneder) menu",
+                            E2EId = "greate-belt-pn-report-storebaelt",
+                            Link = "/plugins/greate-belt-pn/report/storebaelt/2-mdr",
+                            Type = MenuItemTypeEnum.Link,
+                            Position = 4,
+                            MenuTemplate = new PluginMenuTemplateModel
+                            {
+                                Name = "Greate Belt: Sporanlæg (Eftersyn og smøring af skinneudtraek - 2 måneder) menu",
+                                E2EId = "greate-belt-pn-storebaelt-2-mdr",
+                                DefaultLink = "/plugins/greate-belt-pn/report/storebaelt/2-mdr",
+                                Translations = new List<PluginMenuTranslationModel>
+                                {
+                                    new()
+                                    {
+                                        LocaleName = LocaleNames.English,
+                                        Name =
+                                            "Greate Belt: Track system (Inspection and lubrication of rail extraction - 14 days) menu",
+                                        Language = LanguageNames.English,
+                                    },
+                                    new()
+                                    {
+                                        LocaleName = LocaleNames.Danish,
+                                        Name = "Storebælt: Skinneudtræk (2 måneder)",
+                                        Language = LanguageNames.Danish,
+                                    },
+                                }
+                            },
+                            Translations = new List<PluginMenuTranslationModel>
+                            {
+                                new()
+                                {
+                                    LocaleName = LocaleNames.English,
+                                    Name =
+                                        "Greate Belt: Track system (Inspection and lubrication of rail extraction - 14 days) menu",
+                                    Language = LanguageNames.English,
+                                },
+                                new()
+                                {
+                                    LocaleName = LocaleNames.Danish,
+                                    Name = "Storebælt: Skinneudtræk (2 måneder)",
+                                    Language = LanguageNames.Danish,
+                                },
+                            }
+                        },
+                        new()
+                        {
+                            Name = "Greate Belt: Tilstandsrapport menu",
+                            E2EId = "greate-belt-pn-report-storebaelt",
+                            Link = "/plugins/greate-belt-pn/report/storebaelt/tr",
+                            Type = MenuItemTypeEnum.Link,
+                            Position = 0,
+                            MenuTemplate = new PluginMenuTemplateModel
+                            {
+                                Name = "Greate Belt: Tilstandsrapport menu",
+                                E2EId = "greate-belt-pn-storebaelt-2-mdr",
+                                DefaultLink = "/plugins/greate-belt-pn/report/storebaelt/tr",
+                                Translations = new List<PluginMenuTranslationModel>
+                                {
+                                    new()
+                                    {
+                                        LocaleName = LocaleNames.English,
+                                        Name =
+                                            "Greate Belt: Track system (Inspection and lubrication of rail extraction - 14 days) menu",
+                                        Language = LanguageNames.English,
+                                    },
+                                    new()
+                                    {
+                                        LocaleName = LocaleNames.Danish,
+                                        Name = "Storebælt: Tilstandsrapport",
+                                        Language = LanguageNames.Danish,
+                                    },
+                                }
+                            },
+                            Translations = new List<PluginMenuTranslationModel>
+                            {
+                                new()
+                                {
+                                    LocaleName = LocaleNames.English,
+                                    Name =
+                                        "Greate Belt: Track system (Inspection and lubrication of rail extraction - 14 days) menu",
+                                    Language = LanguageNames.English,
+                                },
+                                new()
+                                {
+                                    LocaleName = LocaleNames.Danish,
+                                    Name = "Storebælt: Tilstandsrapport",
+                                    Language = LanguageNames.Danish,
+                                },
+                            }
+                        },
+                        new()
+                        {
+                            Name = "Greate Belt: Sporskifteeftersyn menu",
+                            E2EId = "greate-belt-pn-report-storebaelt",
+                            Link = "/plugins/greate-belt-pn/report/storebaelt/sse",
+                            Type = MenuItemTypeEnum.Link,
+                            Position = 1,
+                            MenuTemplate = new PluginMenuTemplateModel
+                            {
+                                Name = "Greate Belt: Sporskifteeftersyn menu",
+                                E2EId = "greate-belt-pn-storebaelt-2-mdr",
+                                DefaultLink = "/plugins/greate-belt-pn/report/storebaelt/sse",
+                                Translations = new List<PluginMenuTranslationModel>
+                                {
+                                    new()
+                                    {
+                                        LocaleName = LocaleNames.English,
+                                        Name =
+                                            "Greate Belt: Track system (Inspection and lubrication of rail extraction - 14 days) menu",
+                                        Language = LanguageNames.English,
+                                    },
+                                    new()
+                                    {
+                                        LocaleName = LocaleNames.Danish,
+                                        Name = "Storebælt: Sporskifteeftersyn",
+                                        Language = LanguageNames.Danish,
+                                    },
+                                }
+                            },
+                            Translations = new List<PluginMenuTranslationModel>
+                            {
+                                new()
+                                {
+                                    LocaleName = LocaleNames.English,
+                                    Name =
+                                        "Greate Belt: Track system (Inspection and lubrication of rail extraction - 14 days) menu",
+                                    Language = LanguageNames.English,
+                                },
+                                new()
+                                {
+                                    LocaleName = LocaleNames.Danish,
+                                    Name = "Storebælt: Sporskifteeftersyn",
+                                    Language = LanguageNames.Danish,
+                                },
+                            }
+                        },
+                        new()
+                        {
+                            Name = "Greate Belt: Sporanlæg (Eftersyn og kontrol af gennemgående og centralsikrede spor) menu",
+                            E2EId = "greate-belt-pn-report-storebaelt",
+                            Link = "/plugins/greate-belt-pn/report/storebaelt/saekcsltf",
+                            Type = MenuItemTypeEnum.Link,
+                            Position = 2,
+                            MenuTemplate = new PluginMenuTemplateModel
+                            {
+                                Name = "Greate Belt: Sporanlæg (Eftersyn og kontrol af gennemgående og centralsikrede spor) menu",
+                                E2EId = "greate-belt-pn-storebaelt-2-mdr",
+                                DefaultLink = "/plugins/greate-belt-pn/report/storebaelt/saekcsltf",
+                                Translations = new List<PluginMenuTranslationModel>
+                                {
+                                    new()
+                                    {
+                                        LocaleName = LocaleNames.English,
+                                        Name =
+                                            "Greate Belt: Track system (Inspection and lubrication of rail extraction - 14 days) menu",
+                                        Language = LanguageNames.English,
+                                    },
+                                    new()
+                                    {
+                                        LocaleName = LocaleNames.Danish,
+                                        Name = "Storebælt: Sporanlæg (Eftersyn og kontrol af gennemgående og centralsikrede spor)",
+                                        Language = LanguageNames.Danish,
+                                    },
+                                }
+                            },
+                            Translations = new List<PluginMenuTranslationModel>
+                            {
+                                new()
+                                {
+                                    LocaleName = LocaleNames.English,
+                                    Name =
+                                        "Greate Belt: Track system (Inspection and lubrication of rail extraction - 14 days) menu",
+                                    Language = LanguageNames.English,
+                                },
+                                new()
+                                {
+                                    LocaleName = LocaleNames.Danish,
+                                    Name = "Storebælt: Sporanlæg (Eftersyn og kontrol af gennemgående og centralsikrede spor)",
+                                    Language = LanguageNames.Danish,
+                                },
+                            }
+                        },
                     }
-                };
+                }
+            };
 
             return pluginMenu;
         }
@@ -267,22 +596,6 @@ namespace GreateBelt.Pn
             var result = new MenuModel();
             result.LeftMenu.Add(new MenuItemModel
             {
-                Name = localizationService.GetString("Øresund"),
-                E2EId = "greate-belt-pn-oresund",
-                Link = "",
-                MenuItems = new List<MenuItemModel>
-                {
-                    new()
-                    {
-                        Name = localizationService.GetString("Øresund: Sporanlæg (Eftersyn og smøring af skinneudtraek - 14 dags) menu"),
-                        E2EId = "greate-belt-pn-report-oresund",
-                        Link = "/plugins/greate-belt-pn/report/oresund/14-dags",
-                        Position = 0,
-                    },
-                }
-            });
-            result.LeftMenu.Add(new MenuItemModel
-            {
                 Name = localizationService.GetString("Greate Belt"),
                 E2EId = "greate-belt-pn-storebaelt",
                 Link = "",
@@ -290,9 +603,27 @@ namespace GreateBelt.Pn
                 {
                     new()
                     {
-                        Name = localizationService.GetString("Greate Belt: Sporanlæg (Eftersyn og smøring af skinneudtraek - 14 dags) menu"),
+                        Name = localizationService.GetString(
+                            "Greate Belt: Sporanlæg (Eftersyn og smøring af skinneudtraek - 14 dags) menu"),
                         E2EId = "greate-belt-pn-report-storebaelt",
                         Link = "/plugins/greate-belt-pn/report/storebaelt/14-dags",
+                        Position = 0,
+                    },
+                }
+            });
+            result.LeftMenu.Add(new MenuItemModel
+            {
+                Name = localizationService.GetString("Øresund"),
+                E2EId = "greate-belt-pn-oresund",
+                Link = "",
+                MenuItems = new List<MenuItemModel>
+                {
+                    new()
+                    {
+                        Name = localizationService.GetString(
+                            "Øresund: Sporanlæg (Eftersyn og smøring af skinneudtraek - 14 dags) menu"),
+                        E2EId = "greate-belt-pn-report-oresund",
+                        Link = "/plugins/greate-belt-pn/report/oresund/14-dags",
                         Position = 0,
                     },
                 }
@@ -302,7 +633,6 @@ namespace GreateBelt.Pn
 
         public void SeedDatabase(string connectionString)
         {
-
         }
 
         public PluginPermissionsManager GetPermissionsManager(string connectionString)
