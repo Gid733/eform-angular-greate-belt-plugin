@@ -1,11 +1,11 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-    <OutputPath>../../../eFormAPI.Web/Plugins/GreateBelt.Pn</OutputPath>
+    <OutputPath>C:\Users\GitHub\eform-angular-frontend\eFormAPI\eFormAPI.Web\Plugins\GreateBelt.Pn</OutputPath>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">

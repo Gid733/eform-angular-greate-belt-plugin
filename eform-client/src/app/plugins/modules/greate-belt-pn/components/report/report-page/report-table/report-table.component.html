@@ -19,11 +19,7 @@
           {{ reportCase.customField1 }}
         </td>
         <td id="reportCaseDoneAt">
-          <date-formatter
-            [date]="reportCase.doneAtUserEditable"
-            [Format]="'datetime'"
-          ></date-formatter>
-          <!--          {{ reportCase.doneAtUserEditable | date }}-->
+          {{ reportCase.doneAtUserEditable | date: dateFormat }}
         </td>
         <td id="reportCaseDoneBy">
           {{ reportCase.doneBy }}

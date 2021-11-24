@@ -10,6 +10,7 @@ import { Paged, TableHeaderElementModel } from 'src/app/common/models';
 import { GreateBeltPnClaims } from '../../../../enums';
 import { ReportStateService } from '../../store';
 import { ReportCaseModel } from '../../../../models';
+import { STANDARD_DATE_FORMAT } from 'src/app/common/const';
 
 @Component({
   selector: 'app-report-table',
@@ -57,7 +58,11 @@ export class ReportTableComponent implements OnInit {
     return GreateBeltPnClaims;
   }
 
-  constructor(public reportStateService: ReportStateService) {}
+  get dateFormat() {
+    return STANDARD_DATE_FORMAT;
+  }
+
+  constructor() {}
 
   ngOnInit(): void {}
 
